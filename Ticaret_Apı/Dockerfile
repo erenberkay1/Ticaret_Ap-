@@ -4,9 +4,9 @@ WORKDIR /src
 # Her şeyi kopyala
 COPY . .
 
-# Klasör ve dosya adı artık 'Ticaret_Api' (noktalı i)
-RUN dotnet restore "Ticaret_Api/Ticaret_Api.csproj"
-RUN dotnet publish "Ticaret_Api/Ticaret_Api.csproj" -c Release -o /app/publish
+# Artık her şey 'App' klasöründe ve 'App.csproj' adında
+RUN dotnet restore "App/App.csproj"
+RUN dotnet publish "App/App.csproj" -c Release -o /app/publish
 
 FROM mcr.microsoft.com/dotnet/aspnet:10.0
 WORKDIR /app
@@ -15,5 +15,5 @@ COPY --from=build /app/publish .
 ENV ASPNETCORE_URLS=http://+:10000
 EXPOSE 10000
 
-# DLL adı genellikle proje adıyla aynı olur
-ENTRYPOINT ["dotnet", "Ticaret_Api.dll"]
+# DLL adı artık App.dll oldu
+ENTRYPOINT ["dotnet", "App.dll"]
